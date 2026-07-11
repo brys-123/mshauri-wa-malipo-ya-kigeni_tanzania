@@ -25,599 +25,17 @@ st.set_page_config(
 )
 
 # ─────────────────────────────────────────────────────────────────
-# PREMIUM CSS — 3D cards, animated gradients, glassmorphism
-# ─────────────────────────────────────────────────────────────────
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
-
-/* ══ GLOBAL RESET ══ */
-html, body, .stApp {
-    font-family: 'DM Sans', sans-serif !important;
-    background: #f0f2ff !important;
-}
-
-/* Animated mesh background */
-.stApp {
-    background:
-        radial-gradient(ellipse at 20% 20%, rgba(99,102,241,0.10) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 10%, rgba(139,92,246,0.08) 0%, transparent 45%),
-        radial-gradient(ellipse at 60% 80%, rgba(59,130,246,0.07) 0%, transparent 50%),
-        radial-gradient(ellipse at 10% 80%, rgba(16,185,129,0.06) 0%, transparent 45%),
-        #eef0fb !important;
-    background-attachment: fixed !important;
-}
-
-/* ══ KEYFRAMES ══ */
-@keyframes gradientShift {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-@keyframes floatUp {
-    0%   { opacity:0; transform: translateY(18px); }
-    100% { opacity:1; transform: translateY(0); }
-}
-@keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.3), 0 20px 60px rgba(99,102,241,0.15), 0 8px 24px rgba(0,0,0,0.10); }
-    50%       { box-shadow: 0 0 0 6px rgba(99,102,241,0.08), 0 20px 60px rgba(99,102,241,0.22), 0 8px 24px rgba(0,0,0,0.12); }
-}
-@keyframes shimmer {
-    0%   { background-position: -200% center; }
-    100% { background-position: 200% center; }
-}
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-@keyframes fadeSlideIn {
-    0%   { opacity:0; transform: translateY(10px) scale(0.98); }
-    100% { opacity:1; transform: translateY(0)    scale(1);    }
-}
-
-/* ══ TOP HERO BANNER ══ */
-.hero-banner {
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 35%, #2563eb 70%, #0ea5e9 100%);
-    background-size: 300% 300%;
-    animation: gradientShift 8s ease infinite, floatUp 0.6s ease both;
-    border-radius: 24px;
-    padding: 2.2rem 2.6rem;
-    margin-bottom: 1.6rem;
-    position: relative;
-    overflow: hidden;
-    box-shadow:
-        0 4px 6px rgba(79,70,229,0.12),
-        0 20px 60px rgba(79,70,229,0.25),
-        0 40px 100px rgba(79,70,229,0.12),
-        inset 0 1px 0 rgba(255,255,255,0.25);
-}
-.hero-banner::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 280px; height: 280px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.07);
-}
-.hero-banner::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: 30%;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-}
-.hero-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.9rem;
-    font-weight: 800;
-    color: #fff;
-    margin: 0 0 0.3rem 0;
-    letter-spacing: -0.8px;
-    position: relative; z-index: 2;
-}
-.hero-sub {
-    font-size: 0.92rem;
-    color: rgba(255,255,255,0.82);
-    margin: 0;
-    position: relative; z-index: 2;
-}
-.hero-rate-pill {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.30);
-    border-radius: 16px;
-    padding: 0.9rem 1.4rem;
-    position: relative; z-index: 2;
-    display: inline-block;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 16px rgba(0,0,0,0.15);
-}
-.hero-rate-pill .hrp-label {
-    font-size: 0.68rem;
-    color: rgba(255,255,255,0.75);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    font-weight: 600;
-}
-.hero-rate-pill .hrp-val {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.7rem;
-    font-weight: 600;
-    color: #fff;
-    line-height: 1.15;
-}
-.hero-rate-pill .hrp-change {
-    font-size: 0.78rem;
-    color: rgba(255,255,255,0.88);
-}
-
-/* ══ 3D GLASS METRIC CARDS ══ */
-.glass-card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.75) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.80);
-    padding: 1.4rem 1.5rem;
-    margin-bottom: 1rem;
-    position: relative;
-    overflow: hidden;
-    animation: fadeSlideIn 0.5s ease both;
-    transition: transform 0.25s cubic-bezier(.34,1.56,.64,1),
-                box-shadow 0.25s ease;
-    box-shadow:
-        0 1px 0 rgba(255,255,255,0.9) inset,
-        0 -1px 0 rgba(0,0,0,0.04) inset,
-        2px 4px 8px rgba(0,0,0,0.06),
-        0 12px 32px rgba(79,70,229,0.08),
-        0 24px 48px rgba(0,0,0,0.06);
-}
-.glass-card:hover {
-    transform: translateY(-4px) scale(1.01);
-    box-shadow:
-        0 1px 0 rgba(255,255,255,0.9) inset,
-        0 -1px 0 rgba(0,0,0,0.04) inset,
-        2px 4px 8px rgba(0,0,0,0.08),
-        0 20px 48px rgba(79,70,229,0.15),
-        0 32px 64px rgba(0,0,0,0.10);
-}
-/* Gradient accent line on top */
-.glass-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 20px 20px 0 0;
-}
-.glass-card.g-indigo::before  { background: linear-gradient(90deg, #4f46e5, #7c3aed); }
-.glass-card.g-violet::before  { background: linear-gradient(90deg, #7c3aed, #ec4899); }
-.glass-card.g-emerald::before { background: linear-gradient(90deg, #059669, #0ea5e9); }
-.glass-card.g-amber::before   { background: linear-gradient(90deg, #f59e0b, #ef4444); }
-.glass-card.g-rose::before    { background: linear-gradient(90deg, #f43f5e, #f97316); }
-.glass-card.g-sky::before     { background: linear-gradient(90deg, #0ea5e9, #6366f1); }
-
-.gc-label {
-    font-size: 0.70rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #6b7280;
-    margin-bottom: 0.4rem;
-}
-.gc-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #111827;
-    line-height: 1.2;
-}
-.gc-note {
-    font-size: 0.75rem;
-    color: #9ca3af;
-    margin-top: 0.25rem;
-}
-.gc-icon {
-    position: absolute;
-    top: 1rem; right: 1.2rem;
-    font-size: 1.6rem;
-    opacity: 0.15;
-}
-
-/* ══ 3D RECOMMENDATION HERO CARDS ══ */
-.rec-3d {
-    border-radius: 22px;
-    padding: 2rem 2.2rem;
-    margin-bottom: 1rem;
-    position: relative;
-    overflow: hidden;
-    animation: fadeSlideIn 0.6s ease both, pulseGlow 4s ease-in-out infinite;
-    transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
-}
-.rec-3d:hover { transform: translateY(-5px) scale(1.008); }
-
-.rec-3d::after {
-    content: '';
-    position: absolute;
-    bottom: -40px; right: -40px;
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    opacity: 0.18;
-    background: rgba(255,255,255,0.6);
-}
-
-/* LIPA SASA — green gradient */
-.rec-go {
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 30%, #6ee7b7 60%, #34d399 100%);
-    border: 1.5px solid rgba(16,185,129,0.40);
-    box-shadow:
-        0 1px 0 rgba(255,255,255,0.8) inset,
-        0 20px 60px rgba(16,185,129,0.25),
-        0 8px 24px rgba(16,185,129,0.15),
-        0 2px 4px rgba(0,0,0,0.06);
-    color: #064e3b;
-}
-
-/* SUBIRI — amber gradient */
-.rec-wait {
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 30%, #fcd34d 60%, #fbbf24 100%);
-    border: 1.5px solid rgba(245,158,11,0.40);
-    box-shadow:
-        0 1px 0 rgba(255,255,255,0.8) inset,
-        0 20px 60px rgba(245,158,11,0.22),
-        0 8px 24px rgba(245,158,11,0.15),
-        0 2px 4px rgba(0,0,0,0.06);
-    color: #78350f;
-}
-
-/* ANGALIA — blue gradient */
-.rec-watch {
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 30%, #93c5fd 60%, #60a5fa 100%);
-    border: 1.5px solid rgba(59,130,246,0.35);
-    box-shadow:
-        0 1px 0 rgba(255,255,255,0.8) inset,
-        0 20px 60px rgba(59,130,246,0.22),
-        0 8px 24px rgba(59,130,246,0.15),
-        0 2px 4px rgba(0,0,0,0.06);
-    color: #1e3a8a;
-}
-
-.rec-3d-action {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.7rem;
-    font-weight: 800;
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 0.7rem;
-    letter-spacing: -0.5px;
-    position: relative; z-index: 2;
-}
-.rec-3d-headline {
-    font-size: 0.95rem;
-    line-height: 1.65;
-    margin-bottom: 0.6rem;
-    position: relative; z-index: 2;
-    font-weight: 500;
-}
-.rec-3d-purpose {
-    font-size: 0.88rem;
-    font-style: italic;
-    opacity: 0.82;
-    position: relative; z-index: 2;
-}
-
-/* ══ GRADIENT PAYMENT BOXES ══ */
-.pay-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 1rem 0;
-}
-.pay-3d {
-    border-radius: 18px;
-    padding: 1.3rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s;
-    animation: fadeSlideIn 0.5s ease both;
-}
-.pay-3d:hover {
-    transform: translateY(-3px) scale(1.02);
-}
-.pay-today {
-    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%);
-    border: 1px solid rgba(99,102,241,0.30);
-    box-shadow: 0 8px 32px rgba(99,102,241,0.18), 0 2px 8px rgba(0,0,0,0.06),
-                inset 0 1px 0 rgba(255,255,255,0.7);
-    color: #1e1b4b;
-}
-.pay-future-okoa {
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 50%, #6ee7b7 100%);
-    border: 1px solid rgba(16,185,129,0.30);
-    box-shadow: 0 8px 32px rgba(16,185,129,0.18), 0 2px 8px rgba(0,0,0,0.06),
-                inset 0 1px 0 rgba(255,255,255,0.7);
-    color: #064e3b;
-}
-.pay-future-hasara {
-    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 50%, #fca5a5 100%);
-    border: 1px solid rgba(239,68,68,0.30);
-    box-shadow: 0 8px 32px rgba(239,68,68,0.15), 0 2px 8px rgba(0,0,0,0.06),
-                inset 0 1px 0 rgba(255,255,255,0.7);
-    color: #7f1d1d;
-}
-.pay-future-stable {
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
-    border: 1px solid rgba(59,130,246,0.30);
-    box-shadow: 0 8px 32px rgba(59,130,246,0.15), 0 2px 8px rgba(0,0,0,0.06),
-                inset 0 1px 0 rgba(255,255,255,0.7);
-    color: #1e3a8a;
-}
-.pay-3d .pb-label { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; opacity: 0.70; margin-bottom: 0.4rem; }
-.pay-3d .pb-val   { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 600; line-height: 1.2; }
-.pay-3d .pb-note  { font-size: 0.73rem; opacity: 0.70; margin-top: 0.25rem; }
-
-/* ══ SAVINGS BANNER ══ */
-.savings-banner {
-    border-radius: 16px;
-    padding: 1.1rem 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 0.5rem;
-    animation: fadeSlideIn 0.7s ease both;
-}
-.sb-okoa   {
-    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    border: 1px solid rgba(16,185,129,0.35);
-    box-shadow: 0 4px 20px rgba(16,185,129,0.12);
-    color: #064e3b;
-}
-.sb-hasara {
-    background: linear-gradient(135deg, #fff1f2, #fee2e2);
-    border: 1px solid rgba(239,68,68,0.30);
-    box-shadow: 0 4px 20px rgba(239,68,68,0.10);
-    color: #7f1d1d;
-}
-.sb-stable {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border: 1px solid rgba(59,130,246,0.28);
-    box-shadow: 0 4px 20px rgba(59,130,246,0.10);
-    color: #1e3a8a;
-}
-.sb-label  { font-size: 0.82rem; font-weight: 500; }
-.sb-sub    { font-size: 0.73rem; opacity: 0.72; margin-top: 2px; }
-.sb-amount { font-family: 'JetBrains Mono', monospace; font-size: 1.45rem; font-weight: 600; }
-
-/* ══ INSIGHT CARDS (best day) ══ */
-.insight-3d {
-    border-radius: 18px;
-    padding: 1.3rem 1.5rem;
-    position: relative;
-    overflow: hidden;
-    animation: fadeSlideIn 0.6s ease both;
-    transition: transform 0.25s cubic-bezier(.34,1.56,.64,1);
-}
-.insight-3d:hover { transform: translateY(-4px) scale(1.02); }
-.insight-3d::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 100px; height: 100px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.25);
-}
-.ins-purple {
-    background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 50%, #c4b5fd 100%);
-    border: 1px solid rgba(139,92,246,0.28);
-    box-shadow: 0 8px 32px rgba(139,92,246,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
-    color: #2e1065;
-}
-.ins-indigo {
-    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%);
-    border: 1px solid rgba(99,102,241,0.28);
-    box-shadow: 0 8px 32px rgba(99,102,241,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
-    color: #1e1b4b;
-}
-.ins-teal {
-    background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 50%, #5eead4 100%);
-    border: 1px solid rgba(20,184,166,0.28);
-    box-shadow: 0 8px 32px rgba(20,184,166,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
-    color: #042f2e;
-}
-.ins-label { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; opacity: 0.72; margin-bottom: 0.4rem; }
-.ins-value { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; }
-.ins-note  { font-size: 0.76rem; opacity: 0.72; margin-top: 0.25rem; }
-
-/* ══ DATA WARNING ══ */
-.data-warn-3d {
-    background: linear-gradient(135deg, #fffbeb, #fef3c7);
-    border: 1px solid rgba(245,158,11,0.40);
-    border-left: 4px solid #f59e0b;
-    border-radius: 14px;
-    padding: 0.8rem 1.1rem;
-    font-size: 0.83rem;
-    color: #78350f;
-    margin-bottom: 1.2rem;
-    box-shadow: 0 4px 16px rgba(245,158,11,0.12);
-}
-
-/* ══ SECTION EYEBROW ══ */
-.eyebrow {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.4px;
-    color: #6366f1;
-    margin-bottom: 0.55rem;
-}
-
-/* ══ MODEL CARDS ══ */
-.model-3d {
-    background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(240,245,255,0.85));
-    border: 1px solid rgba(255,255,255,0.80);
-    border-radius: 18px;
-    padding: 1.1rem 1.4rem;
-    margin-bottom: 0.8rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    box-shadow: 0 4px 20px rgba(99,102,241,0.08), 0 1px 0 rgba(255,255,255,0.9) inset,
-                0 12px 32px rgba(0,0,0,0.06);
-    transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
-    animation: fadeSlideIn 0.5s ease both;
-}
-.model-3d:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(99,102,241,0.15), 0 1px 0 rgba(255,255,255,0.9) inset;
-}
-.model-3d .mn  { font-weight: 600; font-size: 0.95rem; color: #1e1b4b; }
-.model-3d .md  { font-size: 0.78rem; color: #6b7280; margin-top: 3px; }
-.model-3d .mr  { text-align: right; }
-.model-3d .mel { font-size: 0.68rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.8px; }
-.model-3d .mev { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 0.9rem; color: #4f46e5; }
-
-/* ══ EXPLAINER ══ */
-.explainer-3d {
-    background: linear-gradient(135deg, #f0f4ff 0%, #e8edff 100%);
-    border: 1px solid rgba(99,102,241,0.20);
-    border-left: 4px solid #6366f1;
-    border-radius: 14px;
-    padding: 1.1rem 1.4rem;
-    font-size: 0.87rem;
-    line-height: 1.75;
-    color: #2d2b5e;
-    box-shadow: 0 4px 16px rgba(99,102,241,0.08);
-}
-
-/* ══ CURRENCY COMPARE ══ */
-.cur-card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(245,247,255,0.85));
-    border: 1px solid rgba(255,255,255,0.78);
-    border-radius: 16px;
-    padding: 1rem 1.3rem;
-    margin-bottom: 0.8rem;
-    box-shadow: 0 4px 16px rgba(99,102,241,0.07), 0 1px 0 rgba(255,255,255,0.9) inset;
-    transition: transform 0.22s cubic-bezier(.34,1.56,.64,1);
-}
-.cur-card:hover { transform: translateY(-2px); }
-.cur-card.best-cur {
-    border-left: 3px solid #10b981;
-    background: linear-gradient(145deg, rgba(209,250,229,0.85), rgba(167,243,208,0.60));
-    box-shadow: 0 8px 28px rgba(16,185,129,0.15), 0 1px 0 rgba(255,255,255,0.9) inset;
-}
-.cur-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-.cur-row { display: flex; justify-content: space-between; padding: 0.35rem 0; font-size: 0.87rem; border-bottom: 1px solid rgba(0,0,0,0.04); }
-.cur-row:last-child { border-bottom: none; }
-.cur-lbl { color: #6b7280; }
-.cur-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: #111827; }
-
-/* ══ URGENCY CHIP ══ */
-.urg-chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    border-radius: 30px;
-    padding: 0.38rem 1rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.2px;
-    margin-bottom: 1rem;
-}
-.urg-high   { background: linear-gradient(135deg,#fee2e2,#fecaca); color:#7f1d1d; border:1px solid rgba(239,68,68,.30); box-shadow:0 4px 14px rgba(239,68,68,.14); }
-.urg-mid    { background: linear-gradient(135deg,#fef3c7,#fde68a); color:#78350f; border:1px solid rgba(245,158,11,.30); box-shadow:0 4px 14px rgba(245,158,11,.14); }
-.urg-low    { background: linear-gradient(135deg,#d1fae5,#a7f3d0); color:#064e3b; border:1px solid rgba(16,185,129,.30); box-shadow:0 4px 14px rgba(16,185,129,.14); }
-
-/* ══ SIDEBAR ══ */
-section[data-testid="stSidebar"] > div {
-    background: linear-gradient(180deg, #f8f7ff 0%, #f0f2ff 100%) !important;
-    padding-top: 1rem;
-}
-section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #f8f7ff 0%, #f0f2ff 100%) !important;
-}
-.sb-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: #6366f1;
-    margin: 1.1rem 0 0.45rem 0;
-    padding-bottom: 0.3rem;
-    border-bottom: 1px solid rgba(99,102,241,0.20);
-}
-.preset-lbl {
-    font-size: 0.70rem;
-    font-weight: 600;
-    color: #9ca3af;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 0.4rem;
-}
-
-/* ══ TABS ══ */
-.stTabs [data-baseweb="tab-list"] {
-    background: rgba(255,255,255,0.70);
-    backdrop-filter: blur(10px);
-    border-radius: 14px;
-    padding: 5px;
-    gap: 4px;
-    border: 1px solid rgba(99,102,241,0.15);
-    box-shadow: 0 4px 16px rgba(99,102,241,0.08);
-}
-.stTabs [data-baseweb="tab"] {
-    border-radius: 10px;
-    font-weight: 500;
-    font-size: 0.88rem;
-    padding: 0.5rem 1.2rem;
-    color: #6b7280;
-    border: none;
-    background: transparent;
-    transition: all 0.2s;
-}
-.stTabs [aria-selected="true"] {
-    background: linear-gradient(135deg, #6366f1, #7c3aed) !important;
-    color: #fff !important;
-    box-shadow: 0 4px 14px rgba(99,102,241,0.35);
-}
-
-/* ══ PLOTLY CHART WRAPPER ══ */
-.chart-wrap {
-    background: rgba(255,255,255,0.88);
-    backdrop-filter: blur(16px);
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.80);
-    padding: 1rem;
-    box-shadow: 0 8px 32px rgba(99,102,241,0.10), 0 1px 0 rgba(255,255,255,0.9) inset;
-    margin-bottom: 1rem;
-}
-
-/* ══ SHIMMER LOADER (optional accent) ══ */
-.shimmer-line {
-    height: 3px;
-    border-radius: 3px;
-    background: linear-gradient(90deg, #e0e7ff 25%, #c7d2fe 50%, #e0e7ff 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.8s infinite;
-    margin-bottom: 1rem;
-}
-
-#MainMenu, footer { visibility: hidden; }
-</style>
-""", unsafe_allow_html=True)
-
-
-# ─────────────────────────────────────────────────────────────────
-# CONSTANTS
+# PATHS + EXTERNAL DESIGN SYSTEM
 # ─────────────────────────────────────────────────────────────────
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 MODELS_DIR = os.path.join(BASE_DIR, 'models')
 DATA_DIR   = os.path.join(BASE_DIR, 'data')
+
+def load_css(path):
+    with open(path, "r", encoding="utf-8") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+load_css(os.path.join(BASE_DIR, "assets", "style.css"))
 
 PURPOSES = {
     "💳 Netflix / Spotify / huduma za mtandaoni": "streaming",
@@ -724,24 +142,19 @@ def load_data():
 @st.cache_resource(show_spinner=False)
 def load_models():
     models = {}
-    load_errors = {}   # NEW: collect what actually failed, per currency/model
+    load_errors = {}   # collect what actually failed, per currency/model
     for cur in ['usd', 'eur', 'cny']:
         models[cur] = {'arima': None, 'prophet': None,
                        'xgboost': None, 'lstm': None, 'scaler': None}
         load_errors[cur] = {}
         try:
-            models[cur]['arima'] = joblib.load(
-                os.path.join(MODELS_DIR, f'arima_{cur}_model.pkl'))
+            with open(os.path.join(MODELS_DIR, f'arima_{cur}_model.pkl'), 'rb') as f:
+                models[cur]['arima'] = pickle.load(f)
         except Exception as e:
             load_errors[cur]['arima'] = str(e)
         try:
-            models[cur]['arima'] = joblib.load(
-                os.path.join(MODELS_DIR, f'arima_{cur}_model.pkl'))
-        except Exception as e:
-            load_errors[cur]['arima'] = str(e)
-        try:
-            models[cur]['prophet'] = joblib.load(
-                os.path.join(MODELS_DIR, f'prophet_{cur}_model.pkl'))
+            with open(os.path.join(MODELS_DIR, f'prophet_{cur}_model.pkl'), 'rb') as f:
+                models[cur]['prophet'] = pickle.load(f)
         except Exception as e:
             load_errors[cur]['prophet'] = str(e)
         try:
@@ -801,21 +214,14 @@ def _xgboost_features(df):
                       d.month, d.weekday(), (d.month - 1) // 3 + 1]])
 
 def pred_xgboost(model, df, steps):
-    # NEW: this model now predicts all `steps` days DIRECTLY in one call from
-    # real historical data — it no longer feeds its own guesses back in as
-    # if they were real, which is what previously let errors compound into
-    # impossible values (e.g. a negative exchange rate).
     try:
         feat = _xgboost_features(df)
-        pred = model.predict(feat)[0]   # shape: (7,) — one shot, all days at once
+        pred = model.predict(feat)[0]   # shape: (30,) — one shot, all days at once
         return np.array(pred[:steps])
     except Exception:
         return None
 
 def pred_lstm(model, scaler, df, steps, seq=60):
-    # NEW: this model now predicts all `steps` days DIRECTLY from the last
-    # `seq` real days — same reasoning as XGBoost above, no recursive
-    # feedback loop.
     try:
         if len(df) < seq:
             return None
@@ -828,11 +234,6 @@ def pred_lstm(model, scaler, df, steps, seq=60):
         return None
 
 def get_ensemble(models_dict, df, cur_key, steps):
-    # NEW: always try every model that actually loaded, instead of only
-    # falling back to ARIMA/Prophet when BOTH XGBoost and LSTM fail.
-    # This is what was silently changing predictions between environments —
-    # if e.g. only LSTM failed to load, the ensemble used to quietly drop to
-    # "XGBoost only" with no ARIMA/Prophet included, and no warning shown.
     forecasts = {}
 
     p = pred_xgboost(models_dict[cur_key]['xgboost'], df, steps)
@@ -845,13 +246,8 @@ def get_ensemble(models_dict, df, cur_key, steps):
     p = pred_arima(models_dict[cur_key]['arima'], steps)
     if p is not None: forecasts['ARIMA'] = p
 
-    # Prophet excluded from the ensemble average: backtesting showed it
-    # consistently has the highest error of all 4 models across every
-    # currency (4-15% MAPE vs <3% for the others) — not a bug, just a
-    # genuine accuracy finding for this particular data. Still loaded so
-    # its number is visible for comparison in the debug table.
-    # p = pred_prophet(models_dict[cur_key]['prophet'], steps)
-    # if p is not None: forecasts['Prophet'] = p
+    p = pred_prophet(models_dict[cur_key]['prophet'], steps)
+    if p is not None: forecasts['Prophet'] = p
 
     if not forecasts:
         return None, {}
@@ -965,8 +361,8 @@ if not all_data:
 with st.sidebar:
     st.markdown("""
     <div style="text-align:center;padding:0.5rem 0 0.8rem 0">
-        <span style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;
-              background:linear-gradient(135deg,#4f46e5,#7c3aed);
+        <span style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;
+              background:linear-gradient(135deg,#0E7C7B,#E8A33D);
               -webkit-background-clip:text;-webkit-text-fill-color:transparent">
             💱 Mshauri
         </span>
@@ -1028,9 +424,9 @@ with st.sidebar:
     if st.button(translate('refresh_button'), use_container_width=True):
         load_data.clear(); load_models.clear(); st.rerun()
 
-    st.markdown("""<p style='font-size:0.73rem;color:#9ca3af;line-height:1.6;margin-top:0.8rem;'>
+    st.markdown("""<p style='font-size:0.73rem;color:#5C7488;line-height:1.6;margin-top:0.8rem;'>
     ⚠️ Ushauri kulingana na data ya kihistoria. Thibitisha na
-    <a href="https://www.bot.go.tz" target="_blank" style="color:#6366f1">BOT</a>
+    <a href="https://www.bot.go.tz" target="_blank" style="color:#0E7C7B">BOT</a>
     au benki yako.</p>""", unsafe_allow_html=True)
 
 
@@ -1051,42 +447,26 @@ with st.spinner(f"Inachambua {cur_display}/TZS..."):
 if ensemble is None:
     st.error("❌ Modeli hazikuweza kutoa utabiri."); st.stop()
 
-# NEW: visible diagnostics — shows exactly which models contributed to this
-# forecast, and surfaces any model-loading errors captured in load_models().
-# This is what used to be completely invisible (silently swallowed
-# exceptions), and is the reason predictions could differ between your
-# local machine and Render with no error shown anywhere.
-with st.expander("🔧 Debug: model status (tap to expand)", expanded=False):
-    st.write(f"Models used in this forecast: {list(all_forecasts.keys())}")
-    cur_errors = all_models.get('_load_errors', {}).get(cur_key, {})
-    if cur_errors:
-        st.warning(f"Models that FAILED to load for {cur_display}:")
-        for model_name, err in cur_errors.items():
-            st.code(f"{model_name}: {err}")
-    else:
-        st.success("All models loaded successfully for this currency.")
-
-    # NEW: show each model's raw last-day prediction side by side, so you can
-    # see if one model is wildly disagreeing with the others (a red flag)
-    # instead of that disagreement being hidden inside an averaged ensemble.
-    if all_forecasts:
-        st.write("Each model's predicted rate for the final day of this forecast:")
-        compare_rows = []
-        for name, vals in all_forecasts.items():
-            pct_change = (vals[-1] - current_rate) / current_rate * 100
-            compare_rows.append({
-                "Model": name,
-                f"Predicted {cur_display}/TZS (day {steps})": round(float(vals[-1]), 2),
-                "% change vs today": round(float(pct_change), 2)
-            })
-        st.dataframe(pd.DataFrame(compare_rows), use_container_width=True, hide_index=True)
-        st.caption("If these numbers disagree wildly with each other, treat the "
-                   "ensemble average with caution — it means the models "
-                   "aren't actually agreeing, they're just being averaged.")
-
 lower_band, upper_band = get_confidence_band(all_forecasts, ensemble)
 advice = get_advice(current_rate, ensemble, payment_amount, cur_display, purpose_key, steps)
 bda    = best_day_analysis(df)
+
+# Plain-language "how confident should I be" indicator, based on how closely
+# the underlying forecasts agree with each other — no model names/jargon
+# shown to the end user.
+def get_confidence_label(all_forecasts):
+    if len(all_forecasts) < 2:
+        return "Kati", "conf-mid", "Data haitoshi kulinganisha"
+    arr = np.array(list(all_forecasts.values()))
+    spread_pct = float(np.std(arr[:, -1]) / np.mean(arr[:, -1]) * 100)
+    if spread_pct < 0.5:
+        return "Juu", "conf-high", "Uchambuzi mbalimbali unakubaliana"
+    elif spread_pct < 2.0:
+        return "Kati", "conf-mid", "Uchambuzi unakubaliana kiasi"
+    else:
+        return "Chini", "conf-low", "Uchambuzi haukubaliani — angalia kwa makini"
+
+conf_label, conf_class, conf_note = get_confidence_label(all_forecasts)
 
 future_dates = [df['date'].iloc[-1] + timedelta(days=i+1) for i in range(steps)]
 
@@ -1094,7 +474,7 @@ future_dates = [df['date'].iloc[-1] + timedelta(days=i+1) for i in range(steps)]
 # HERO BANNER
 # ─────────────────────────────────────────────────────────────────
 arrow  = "▲" if rate_delta >= 0 else "▼"
-acolor_css = "color:#ef4444" if rate_delta >= 0 else "color:#10b981"
+acolor_css = "color:#D94E1F" if rate_delta >= 0 else "color:#0E9F6E"
 
 col_hdr, col_pill = st.columns([2, 1])
 with col_hdr:
@@ -1123,7 +503,7 @@ if days_old > 2:
     <div class="data-warn-3d">
         📅 Bei ni ya <b>{last_date.strftime('%d/%m/%Y')}</b> (siku {days_old} zilizopita).
         Kwa bei halisi tembelea
-        <a href="https://www.bot.go.tz" target="_blank" style="color:#92400e;font-weight:600">www.bot.go.tz</a>.
+        <a href="https://www.bot.go.tz" target="_blank" style="color:#5C3A0A;font-weight:600">www.bot.go.tz</a>.
     </div>""", unsafe_allow_html=True)
 
 # Shimmer divider
@@ -1134,12 +514,10 @@ st.markdown('<div class="shimmer-line"></div>', unsafe_allow_html=True)
 # ─────────────────────────────────────────────────────────────────
 tab1, tab2, tab3 = st.tabs([translate('tab_advice'), translate('tab_trend'), translate('tab_analysis')])
 
-
 # ══════════════════════════════════════════════════════════════════
 # TAB 1 — USHAURI
 # ══════════════════════════════════════════════════════════════════
 with tab1:
-
     # ── Row 1: 4 glass metric chips ─────────────────────────────
     c1, c2, c3, c4 = st.columns(4)
 
@@ -1195,6 +573,9 @@ with tab1:
         </div>
         <span class="urg-chip {advice['urgency_class']}">
             ● Hatari: {advice['urgency_level']} — {advice['urgency_note']}
+        </span>
+        <span class="confidence-badge {conf_class}">
+            ✓ Uhakika: {conf_label} — {conf_note}
         </span>
         """, unsafe_allow_html=True)
 
@@ -1275,57 +656,52 @@ with tab1:
 # TAB 2 — MWENENDO WA BEI
 # ══════════════════════════════════════════════════════════════════
 with tab2:
-
     hist = df.tail(120)
 
     fig = go.Figure()
 
-    # Confidence band
     fig.add_trace(go.Scatter(
         x=future_dates + future_dates[::-1],
         y=list(upper_band) + list(lower_band[::-1]),
         fill='toself',
-        fillcolor='rgba(99,102,241,0.10)',
+        fillcolor='rgba(14,124,123,0.12)',
         line=dict(color='rgba(255,255,255,0)'),
         showlegend=True, name='Upeo wa Utabiri (±)',
         hoverinfo='skip'
     ))
 
-    # Historical
     fig.add_trace(go.Scatter(
         x=hist['date'], y=hist['mean'],
         name='Bei ya Kihistoria',
-        line=dict(color='#4f46e5', width=2.5),
+        line=dict(color='#0B5457', width=2.5),
         mode='lines',
         hovertemplate='%{x|%d/%m/%Y}<br>TZS %{y:,.2f}<extra></extra>'
     ))
 
-    # MA_30
     if 'MA_30' in hist.columns:
         fig.add_trace(go.Scatter(
             x=hist['date'], y=hist['MA_30'],
             name='Wastani wa Siku 30',
-            line=dict(color='#f59e0b', width=1.8, dash='dot'),
+            line=dict(color='#E8A33D', width=1.8, dash='dot'),
             mode='lines',
             hovertemplate='MA30: TZS %{y:,.2f}<extra></extra>'
         ))
 
-    # Ensemble forecast
     fig.add_trace(go.Scatter(
         x=future_dates, y=ensemble,
         name=f'Utabiri (Siku {steps})',
-        line=dict(color='#10b981', width=3),
+        line=dict(color='#10B981', width=3),
         mode='lines+markers',
-        marker=dict(size=6, color='#10b981',
+        marker=dict(size=6, color='#10B981',
                     line=dict(color='white', width=2)),
         hovertemplate='%{x|%d/%m/%Y}<br>Tabiri: TZS %{y:,.2f}<extra></extra>'
     ))
 
     fig.add_vrect(
         x0=df['date'].iloc[-1], x1=future_dates[-1],
-        fillcolor="rgba(99,102,241,0.04)", layer="below", line_width=0,
+        fillcolor="rgba(14,124,123,0.05)", layer="below", line_width=0,
         annotation_text="Eneo la utabiri", annotation_position="top left",
-        annotation_font_size=11, annotation_font_color="#6366f1"
+        annotation_font_size=11, annotation_font_color="#0E7C7B"
     )
 
     fig.update_layout(
@@ -1333,22 +709,21 @@ with tab2:
         margin=dict(l=0, r=0, t=30, b=0),
         legend=dict(orientation='h', yanchor='bottom', y=1.02,
                     bgcolor='rgba(255,255,255,0.85)',
-                    bordercolor='rgba(99,102,241,0.20)', borderwidth=1),
+                    bordercolor='rgba(14,124,123,0.20)', borderwidth=1),
         xaxis=dict(title='Tarehe', showgrid=True,
-                   gridcolor='rgba(99,102,241,0.08)', zeroline=False,
+                   gridcolor='rgba(14,124,123,0.08)', zeroline=False,
                    tickfont=dict(size=11)),
         yaxis=dict(title=f'TZS kwa 1 {cur_display}', showgrid=True,
-                   gridcolor='rgba(99,102,241,0.08)', zeroline=False,
+                   gridcolor='rgba(14,124,123,0.08)', zeroline=False,
                    tickfont=dict(size=11)),
         hovermode='x unified',
-        plot_bgcolor='rgba(255,255,255,0.95)',
+        plot_bgcolor='rgba(255,255,255,0.35)',
         paper_bgcolor='rgba(0,0,0,0)',
-        font=dict(family='DM Sans, sans-serif', color='#374151'),
+        font=dict(family='Manrope, sans-serif', color='#0B2545'),
     )
 
-    st.markdown('<div class="chart-wrap">', unsafe_allow_html=True)
+    st.markdown('<div class="eyebrow">📈 Mwenendo wa Bei na Utabiri</div>', unsafe_allow_html=True)
     st.plotly_chart(fig, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<div class="eyebrow">Bei Inayotarajiwa — Kila Siku</div>', unsafe_allow_html=True)
 
@@ -1378,44 +753,69 @@ with tab2:
 # TAB 3 — UCHAMBUZI WA KINA
 # ══════════════════════════════════════════════════════════════════
 with tab3:
+    with st.expander("🔧 Maelezo ya Kiufundi (kwa wataalamu)", expanded=False):
+        st.write(f"Models used in this forecast: {list(all_forecasts.keys())}")
+        cur_errors = all_models.get('_load_errors', {}).get(cur_key, {})
+        if cur_errors:
+            st.warning(f"Models that FAILED to load for {cur_display}:")
+            for model_name, err in cur_errors.items():
+                st.code(f"{model_name}: {err}")
+        else:
+            st.success("All models loaded successfully for this currency.")
+
+        if all_forecasts:
+            st.write("Each model's predicted rate for the final day of this forecast:")
+            compare_rows_dbg = []
+            for name, vals in all_forecasts.items():
+                pct_change = (vals[-1] - current_rate) / current_rate * 100
+                compare_rows_dbg.append({
+                    "Model": name,
+                    f"Predicted {cur_display}/TZS (day {steps})": round(float(vals[-1]), 2),
+                    "% change vs today": round(float(pct_change), 2)
+                })
+            st.dataframe(pd.DataFrame(compare_rows_dbg), use_container_width=True, hide_index=True)
+            st.caption("If these numbers disagree wildly with each other, treat the "
+                       "ensemble average with caution — it means the models "
+                       "aren't actually agreeing, they're just being averaged.")
 
     col_l, col_r = st.columns(2, gap="large")
 
     with col_l:
-        st.markdown('<div class="eyebrow">🤖 Modeli Zilizotumika</div>', unsafe_allow_html=True)
+        st.markdown('<div class="eyebrow">✅ Kwa Nini Niamini Ushauri Huu?</div>', unsafe_allow_html=True)
 
-        model_info = {
-            'XGBoost': {'mae':{'usd':3.63,'eur':10.79,'cny':1.49},
-                        'mape':{'usd':0.14,'eur':0.36,'cny':0.40},
-                        'desc':'Inajifunza patterns kutoka vipengele vingi — mwelekeo wa wiki na mwezi'},
-            'LSTM':    {'mae':{'usd':5.33,'eur':22.69,'cny':1.12},
-                        'mape':{'usd':0.21,'eur':0.76,'cny':0.30},
-                        'desc':'Ina "kumbukumbu" ya muda mrefu — inajifunza mifuatano ya bei'},
-        }
-        for mname, mdata in model_info.items():
-            mae  = mdata['mae'].get(cur_key, 0)
-            mape = mdata['mape'].get(cur_key, 0)
-            st.markdown(f"""
-            <div class="model-3d">
-                <div class="mc-left">
-                    <div class="mn">{mname}</div>
-                    <div class="md">{mdata['desc']}</div>
-                </div>
-                <div class="mr">
-                    <div class="mel">Kosa la wastani</div>
-                    <div class="mev">TZS {mae:.2f} ({mape:.2f}%)</div>
-                </div>
-            </div>""", unsafe_allow_html=True)
+        st.markdown(f"""
+        <div class="model-3d">
+            <div class="mc-left">
+                <div class="mn">Uhakika wa Utabiri wa Leo</div>
+                <div class="md">{conf_note}</div>
+            </div>
+            <div class="mr">
+                <div class="mel">Kiwango</div>
+                <div class="mev">{conf_label}</div>
+            </div>
+        </div>""", unsafe_allow_html=True)
 
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown('<div class="eyebrow">ℹ️ Jinsi Inavyofanya Kazi</div>', unsafe_allow_html=True)
+        st.markdown(f"""
+        <div class="model-3d">
+            <div class="mc-left">
+                <div class="mn">Data ya Kihistoria</div>
+                <div class="md">Bei za miaka kadhaa zilizopita za {cur_display}/TZS</div>
+            </div>
+            <div class="mr">
+                <div class="mel">Idadi ya siku</div>
+                <div class="mev">{len(df):,}</div>
+            </div>
+        </div>""", unsafe_allow_html=True)
+
+        st.markdown('<div class="eyebrow" style="margin-top:1rem;">ℹ️ Jinsi Inavyofanya Kazi</div>', unsafe_allow_html=True)
         st.markdown("""
         <div class="explainer-3d">
-            Mfumo unatumia modeli 2 bora (<strong>XGBoost + LSTM</strong>) kuchambua
-            data ya miaka 3. Kila modeli inatabiri bei ya siku zijazo — wastani wake
-            unatoa ushauri. Upeo wa utabiri (eneo la bluu kwenye grafu) unaonyesha
-            pengo la kutokuwa na uhakika. Ushauri ni kwa mtu anayetaka
-            <strong>KULIPA</strong> kwa sarafu ya kigeni.
+            Mfumo unachambua miaka kadhaa ya data ya bei halisi kutabiri mwenendo
+            wa siku zijazo. Utabiri unajaribiwa dhidi ya bei halisi za nyuma kabla
+            ya kutumika, ili kuhakikisha unaaminika. Eneo la rangi kwenye grafu
+            (Mwenendo wa Bei) linaonyesha pengo la kutokuwa na uhakika — eneo
+            dogo linamaanisha utabiri wenye uhakika zaidi. Ushauri ni kwa mtu
+            anayetaka <strong>KULIPA</strong> kwa sarafu ya kigeni.
         </div>""", unsafe_allow_html=True)
 
     with col_r:
@@ -1437,7 +837,7 @@ with tab3:
             is_best = row['display'] == best['display']
             badge_html = ''
             if is_best:
-                badge_html = '<div style="font-size:0.72rem;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:0.5rem">✅ Nafuu Zaidi</div>'
+                badge_html = '<div style="font-size:0.72rem;font-weight:700;color:#0E9F6E;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:0.5rem">✅ Nafuu Zaidi</div>'
 
             card_html = '<div class="cur-card' + (' best-cur' if is_best else '') + '">'
             card_html += badge_html
@@ -1450,32 +850,24 @@ with tab3:
         cards_html += '</div>'
         st.markdown(cards_html, unsafe_allow_html=True)
 
-        if len(all_forecasts) > 1:
-            st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown('<div class="eyebrow">📊 Ulinganisho wa Modeli</div>', unsafe_allow_html=True)
-            fig2 = go.Figure()
-            cmap = {'XGBoost':'#4f46e5','LSTM':'#10b981','ARIMA':'#ef4444','Prophet':'#8b5cf6'}
-            for mname, preds in all_forecasts.items():
-                fig2.add_trace(go.Scatter(
-                    x=future_dates, y=preds, name=mname,
-                    line=dict(color=cmap.get(mname,'#888'), width=2),
-                    mode='lines',
-                    hovertemplate=f'{mname}: TZS %{{y:,.2f}}<extra></extra>'
-                ))
-            fig2.add_trace(go.Scatter(
-                x=future_dates, y=ensemble, name='Ensemble',
-                line=dict(color='#f59e0b', width=3, dash='dash'),
-                hovertemplate='Ensemble: TZS %{y:,.2f}<extra></extra>'
-            ))
-            fig2.update_layout(
-                height=270,
-                margin=dict(l=0,r=0,t=20,b=0),
-                legend=dict(orientation='h', yanchor='bottom', y=1.02,
-                            bgcolor='rgba(255,255,255,0.85)'),
-                xaxis=dict(showgrid=True, gridcolor='rgba(99,102,241,0.08)', zeroline=False),
-                yaxis=dict(title='TZS', showgrid=True, gridcolor='rgba(99,102,241,0.08)', zeroline=False),
-                plot_bgcolor='rgba(255,255,255,0.95)',
-                paper_bgcolor='rgba(0,0,0,0)',
-                font=dict(family='DM Sans, sans-serif', color='#374151'),
-            )
-            st.plotly_chart(fig2, use_container_width=True)
+        st.markdown('<div class="eyebrow" style="margin-top:1rem;">📊 Mwenendo wa Siku 30 Zilizopita</div>', unsafe_allow_html=True)
+        recent = df.tail(30)
+        fig2 = go.Figure()
+        fig2.add_trace(go.Scatter(
+            x=recent['date'], y=recent['mean'], name='Bei',
+            line=dict(color='#0E7C7B', width=2.5),
+            fill='tozeroy', fillcolor='rgba(14,124,123,0.08)',
+            mode='lines',
+            hovertemplate='%{x|%d/%m/%Y}<br>TZS %{y:,.2f}<extra></extra>'
+        ))
+        fig2.update_layout(
+            height=240,
+            margin=dict(l=0,r=0,t=10,b=0),
+            showlegend=False,
+            xaxis=dict(showgrid=False, zeroline=False, tickfont=dict(size=10)),
+            yaxis=dict(showgrid=True, gridcolor='rgba(14,124,123,0.08)', zeroline=False, tickfont=dict(size=10)),
+            plot_bgcolor='rgba(255,255,255,0.35)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            font=dict(family='Manrope, sans-serif', color='#0B2545'),
+        )
+        st.plotly_chart(fig2, use_container_width=True)
