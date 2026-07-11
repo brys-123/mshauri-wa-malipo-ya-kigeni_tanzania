@@ -148,13 +148,13 @@ def load_models():
                        'xgboost': None, 'lstm': None, 'scaler': None}
         load_errors[cur] = {}
         try:
-            with open(os.path.join(MODELS_DIR, f'arima_{cur}_model.pkl'), 'rb') as f:
-                models[cur]['arima'] = pickle.load(f)
+            models[cur]['arima'] = joblib.load(
+                os.path.join(MODELS_DIR, f'arima_{cur}_model.pkl'))
         except Exception as e:
             load_errors[cur]['arima'] = str(e)
         try:
-            with open(os.path.join(MODELS_DIR, f'prophet_{cur}_model.pkl'), 'rb') as f:
-                models[cur]['prophet'] = pickle.load(f)
+            models[cur]['prophet'] = joblib.load(
+                os.path.join(MODELS_DIR, f'prophet_{cur}_model.pkl'))
         except Exception as e:
             load_errors[cur]['prophet'] = str(e)
         try:
