@@ -238,3 +238,30 @@ header[data-testid="stHeader"] {
 .block-container {
   padding-top: 4.5rem !important;
 }
+
+/* ══ MODEL/INFO CARDS — was missing from the redesign, causing plain
+   unstyled text instead of proper cards ══ */
+.model-3d {
+  background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(234,244,243,0.70));
+  border: 1px solid rgba(255,255,255,0.85);
+  border-radius: 20px;
+  padding: 1.15rem 1.45rem;
+  margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 20px rgba(14,124,123,0.10), 0 1px 0 rgba(255,255,255,0.9) inset;
+  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
+}
+.model-3d:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(14,124,123,0.18);
+}
+.model-3d .mc-left { flex: 1; min-width: 180px; }
+.model-3d .mn { font-weight: 700; font-size: 0.96rem; color: var(--ink); }
+.model-3d .md { font-size: 0.79rem; color: var(--ink-soft); margin-top: 3px; }
+.model-3d .mr { text-align: right; }
+.model-3d .mel { font-size: 0.68rem; color: #7C93A8; text-transform: uppercase; letter-spacing: 0.8px; }
+.model-3d .mev { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.1rem; color: var(--teal-600); }
